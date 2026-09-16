@@ -9,7 +9,7 @@ You audit agent-mesh's persistent memory (`wiki/` and `.claude/agent-memory/`) f
 
 ## Before you start
 
-Read `CLAUDE.md`'s "Wiki structure" section to know the expected layout, then read the real state:
+Read `CLAUDE.md`'s "Wiki (persistent memory)" section to know the expected layout, then read the real state:
 - `wiki/index.md` — the catalog
 - `wiki/log.md` — last 5 entries
 - `wiki/meta/` — `calibration.md`, `persona-fit.md`, `framing-patterns.md`, `user-prefs.md` (may not all exist)

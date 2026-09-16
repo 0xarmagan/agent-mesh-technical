@@ -57,6 +57,7 @@ Use the role-based agents defined in .claude/agents/.
 ```
 
 DW execution layer: `implementer` · `researcher` · `verifier` · `integrator` (definitions in `.claude/agents/`). Each task carries an `[expert: <name>]` tag — the implementer reads that expert's definition before implementing, so analysis-phase frameworks carry into execution.
+Quality agents: `meta-advisor` (reasoning audit, VERY HIGH), `completeness-critic` (coverage audit, VERY HIGH), `wiki-synchronizer` (wiki/memory/primer drift audit) — definitions in `.claude/agents/`.
 
 ## Grounding
 

@@ -24,13 +24,13 @@ Also run on any draft that the repo owner flags as "check the technical claims."
 
 ---
 
-### 1. Async path vs native rollup finality
+### 1. Native/synchronous composability vs async messaging
 
-**Correct:** EEZ has two finality paths. The async path settles in ~20 minutes. Native rollups settle in ~12 seconds (same block as the parent chain). These are different guarantees for different use cases.
+**Correct:** EEZ's cross-chain composability is native and synchronous at the protocol level — a call executes within the same L1 block via proxies, not through an async messaging bridge with its own delayed settlement path. Any specific latency or finality figure (e.g. a settlement time in seconds or minutes) must be verified against current source before use — do not state one from memory. Check `knowledge/sources.md` and `.claude/skills/eez-protocol-dev/references/positioning.md` before writing a number.
 
-**Common wrong version:** "EEZ has fast finality" or "EEZ settles in 12 seconds" — applied without specifying which path.
+**Common wrong version:** Citing a specific finality/settlement time figure without verifying it against source, or describing EEZ's composability as an async bridge/messaging path.
 
-**Pass criterion:** If the draft mentions finality or speed, it must name the path (async or native rollup) alongside the figure. A claim that applies a single finality number to EEZ as a whole fails.
+**Pass criterion:** If the draft mentions finality, speed, or a specific time figure, that figure must be traceable to `knowledge/sources.md` or the positioning reference, not asserted from memory. The draft must not describe EEZ-native composability as an async messaging/bridge mechanism.
 
 ---
 
@@ -79,7 +79,7 @@ Also run on any draft that the repo owner flags as "check the technical claims."
 Run each distinction in order. Output:
 
 ```
-[ASYNC vs NATIVE FINALITY]
+[NATIVE/SYNC COMPOSABILITY vs ASYNC MESSAGING]
 Status: PASS | FAIL | N/A
 Issue: (if FAIL) quote the draft's incorrect claim
 Fix: (if FAIL) rewritten sentence that is correct
