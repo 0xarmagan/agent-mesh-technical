@@ -13,7 +13,7 @@ No local clones are kept in version control (`clones/` is gitignored). A missing
 - `src/EEZ.sol` — `executeCrossChainCall` (reverts `ExecutionNotInCurrentBlock` / `ExecutionNotFound`)
 - `src/rollupContract/Rollup.sol` — `threshold` + `checkProofSystemsAndGetVkeys` (`ThresholdNotMet(submitted,required)`, `ProofSystemNotAllowed`); threshold has NO protocol floor — may be 0
 - `src/interfaces/IEEZ.sol` (L1) + `IEEZL2.sol` (L2) — each file defines its OWN `ExecutionEntry` struct with different fields (L1: IEEZ.sol:127, has `rollupUpdates`/`l2ToL1Calls`; L2: IEEZL2.sol:73, has `incomingCalls`/`expectedOutgoingCalls`) — do not treat them as one shared struct. `CrossChainCall` exists ONLY in `IEEZL2.sol`:32; the L1-side equivalent is `L2ToL1Call`, not `CrossChainCall`.
-- `src/EEZ.sol` — `staticCrossChainCall` (read-only cross-chain calls at EEZ.sol:887, executes as STATICCALL; reverts `StaticCallWithValue` at EEZ.sol:1126) — the primitive behind synchronous L1 reads
+- `src/EEZ.sol` — `staticCrossChainCall` (function definition at EEZ.sol:1313, `external view`) — the primitive behind synchronous L1 reads. It resolves via `_resolveStaticEntry` → `_processNStaticCalls` (EEZ.sol:1405), whose static sub-call dispatch reverts `StaticCallWithValue` at EEZ.sol:1412. (The `StaticCallWithValue` revert at EEZ.sol:1126 belongs to `_processNCalls`, the non-static entry-consumption dispatch reached from `_consumeAndExecuteEntry`/`executeCrossChainCall` — not to `staticCrossChainCall`.)
 - Builder-utility ranking: rank primitives by frequency in `script/e2e/*`, not by doc prominence
 
 ## Working rules (carried from agent-mesh field experience)
