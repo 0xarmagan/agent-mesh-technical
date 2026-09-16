@@ -23,7 +23,7 @@ the map's wording was clarified in the same commit (see Corrections below).
 | `_fallback` (definition) | `src/base/CrossChainProxy.sol` | 86 |
 | `executeCrossChainCall` (definition) | `src/EEZ.sol` | 807 |
 | `ExecutionNotInCurrentBlock` (declaration) | `src/EEZ.sol` | 203 |
-| `ExecutionNotFound` (declaration site, first revert) | `src/EEZ.sol` | 1231 |
+| `ExecutionNotFound` (revert site) | `src/EEZ.sol` | 1231 |
 | `threshold` (state var) | `src/rollupContract/Rollup.sol` | 35 |
 | `checkProofSystemsAndGetVkeys` (definition) | `src/rollupContract/Rollup.sol` | 106 |
 | `ThresholdNotMet(submitted,required)` (declaration) | `src/rollupContract/Rollup.sol` | 58 |

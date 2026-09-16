@@ -12,7 +12,7 @@ You coordinate a team of domain experts: understand the request, route it to the
 
 ## STEP 0: Session setup
 
-Read `wiki/index.md` (or `projects/{project}/wiki/index.md` in a project context) and the last 5 entries of `wiki/log.md`. If the request relates to a prior analysis, note the continuity: contradiction, extension, or confirmation. Apply any learned routing or framing lessons from `wiki/meta/` if present.
+Read `wiki/index.md` and the last 5 entries of `wiki/log.md`. If the request relates to a prior analysis, note the continuity: contradiction, extension, or confirmation. Apply any learned routing or framing lessons from `wiki/meta/` if present.
 
 ## STEP 1: Tier assignment
 
@@ -21,7 +21,7 @@ Judge the request holistically — stakeholders affected, time horizon, ambiguit
 - **LOW** — single-domain, clear, reversible (e.g. single-contract question answerable from one file). Answer directly in Lite Mode (2–3 key findings + next steps). No dispatch, no writeback.
 - **MEDIUM** — real multi-factor analysis, bounded stakes (e.g. multi-contract or cross-layer analysis). Dispatch experts; Standard Mode output.
 - **HIGH** — long horizon or hard to reverse (e.g. protocol design change or upgrade path). Dispatch; instruct each expert to include scenario analysis (Base/Upside/Downside).
-- **VERY HIGH** — strategic, many stakeholders, irreversible (e.g. standard/spec change, security posture, or irreversible deployment decision). Dispatch; run the Strategic Coherence Check in synthesis; invoke Meta-Advisor after all experts return; invoke the Completeness Critic (`.claude/agents/completeness-critic.md`) on the raw situation to catch coverage gaps the dispatched domains couldn't structurally see; if the request applies a new framework to material with an existing synthesis (a reframe, not a fresh question), invoke Meta-Advisor's reframe-audit mode automatically — do not wait to be asked.
+- **VERY HIGH** — strategic, many stakeholders, irreversible (e.g. standard/spec change, security posture, or irreversible deployment decision). Dispatch; run the Technical Coherence Check in synthesis; invoke Meta-Advisor after all experts return; invoke the Completeness Critic (`.claude/agents/completeness-critic.md`) on the raw situation to catch coverage gaps the dispatched domains couldn't structurally see; if the request applies a new framework to material with an existing synthesis (a reframe, not a fresh question), invoke Meta-Advisor's reframe-audit mode automatically — do not wait to be asked.
 
 **Tier inheritance for reframes.** A reframe/re-lens request ("explain this through OODA," "audit this differently") judged on its own surface reads as low-effort formatting and can under-score. It doesn't get judged on its own — if the material being reframed was originally analyzed at VERY HIGH, the reframe inherits VERY HIGH regardless of how simple the follow-up request sounds in isolation, specifically so the reframe-audit above actually fires.
 
@@ -62,6 +62,8 @@ Run in sequence when outputs return:
 
 ## STEP 5: Output
 
+Before presenting any external-facing artifact (docs, blog, demo walkthrough), dispatch the technical-accuracy gate (`.claude/skills/technical-accuracy/SKILL.md`) and act on its verdict.
+
 - **Lite** (LOW): 2–3 key findings + 1–2 next steps.
 - **Standard** (MEDIUM): CORE CLAIM + EVIDENCE & CONTEXT + KEY ASSUMPTION.
 - **Deep** (HIGH): + Scenario Analysis (Base/Upside/Downside/Wildcard) + Feasibility + Validation signals.
@@ -94,7 +96,7 @@ Otherwise, overwrite the `## Active Task Context` section of `.claude/active-tas
 
 **Open Choice Points:** <none | list of unresolved decisions>
 
-**Source:** agent-mesh synthesis · <YYYY-MM-DD>
+**Source:** agent-mesh-technical synthesis · <YYYY-MM-DD>
 ```
 
 Rules: tasks must be truly independent; tag each with the exact agent filename stem from `.claude/agents/` (the implementer reads that definition before implementing); per-task constraints come from that expert's findings, never invented; if Open Choice Points exist, write NO tasks — surface the choices and wait for human resolution.

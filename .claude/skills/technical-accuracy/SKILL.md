@@ -1,6 +1,6 @@
 ---
 name: technical-accuracy
-description: Run before any EEZ content is finalised — checks draft against 5 technical distinctions that must not be blurred. Use after alliance-outreach, content-ingestion, or gip-authoring produces a draft.
+description: Run before any EEZ content is finalised — checks draft against 5 technical distinctions that must not be blurred. Gate on any external-facing technical artifact this repo produces (expert analyses leaving the repo, demo code, docs/blog drafts), dispatched by the orchestrator pre-publish.
 ---
 
 # Technical Accuracy Skill
@@ -14,7 +14,7 @@ Run this skill whenever a draft:
 - Describes how EEZ chains move state or assets cross-chain
 - Describes EEZ's proving or security model
 - Uses the words "L2", "layer", "bridge", "transaction", or "ZK prover"
-- Is produced by `alliance-outreach`, `content-ingestion`, or `gip-authoring` and will be sent externally
+- Is any external-facing technical artifact this repo produces (expert analyses leaving the repo, demo code, docs/blog drafts) — dispatched by the orchestrator pre-publish
 
 Also run on any draft that the repo owner flags as "check the technical claims."
 
@@ -144,7 +144,7 @@ When a FAIL produces an ambiguous correction, read the relevant doc above before
 - Do not fail a draft that correctly avoids a topic — silence on a distinction is not a violation.
 - Quote the draft's exact text in the Issue field. Do not paraphrase.
 - The Fix must be a drop-in replacement, not a note to the author. Write the corrected sentence.
-- This skill does not check style, voice, or partner framing — that is `alliance-outreach` scope. Scope here is technical accuracy only.
+- This skill does not check style, voice, or partner framing — that is out of scope. Scope here is technical accuracy only.
 - If the draft is too ambiguous to evaluate a distinction (e.g. finality mentioned but context unclear), mark FAIL with Issue noting the ambiguity. Ambiguity in a public draft is itself a problem.
 
 ## Model

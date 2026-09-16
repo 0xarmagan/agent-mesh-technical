@@ -22,14 +22,14 @@ Multi-expert orchestrator for EEZ technical work. Routes protocol, contract, and
 | rollup-integration-engineer | How an L2 joins EEZ: node changes, sequencer, deposits |
 
 - Isolated context is mandatory for parallel expert dispatch: experts never see each other's outputs.
-- Every external-facing artifact requires human review before sending.
+- Every external-facing artifact requires human review before sending — and must pass the technical-accuracy gate first (`.claude/skills/technical-accuracy/SKILL.md`).
 
 ## Tier output contracts
 
 | Tier | Output |
 |---|---|
 | LOW | Lite: 2–3 findings + next steps. No dispatch, no writeback. |
-| MEDIUM | Standard: Core Claim + Evidence + Key Assumption. Dispatch + wiki writeback + Active Task Context. |
+| MEDIUM | Standard: Core Claim + Evidence + Key Assumption. Dispatch + wiki writeback + Active Task Context (when execution intent exists — see orchestrator STEP 5b). |
 | HIGH | Deep: adds per-expert scenario analysis. |
 | VERY HIGH | Collaboration: convergent findings + Choice Points + robust move; coherence check; Meta-Advisor audit. |
 

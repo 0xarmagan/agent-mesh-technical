@@ -43,4 +43,4 @@ Use the role-based agents defined in .claude/agents/.
 
 - Constitution: `CLAUDE.md`
 - Full pipeline protocol: `.claude/agents/orchestrator.md`
-- Design spec: `.superpowers/sdd/2026-09-16-agent-mesh-technical/`
+- Design spec: `docs/superpowers/specs/2026-09-16-agent-mesh-technical-design.md`
