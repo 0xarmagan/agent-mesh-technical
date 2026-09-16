@@ -7,12 +7,12 @@
 
 No local clones are kept in version control (`clones/` is gitignored). A missing clone is a setup error to surface, never a reason to fall back to doc memory.
 
-## Key-file map (verified 2026-07-16, re-verify against fresh main)
+## Key-file map (verified 2026-09-16 against commit 03e87cddc05bf9c5fce97877498830c644f83192, re-verify against fresh main)
 - `src/base/EEZBase.sol` — `computeCrossChainProxyAddress`, the `SameNetworkProxy(rollupId)` guard in `_createCrossChainProxyInternal` (NOT in the view fn), `computeCrossChainCallHash`
 - `src/base/CrossChainProxy.sol` — `executeOnBehalf` / `_fallback`
 - `src/EEZ.sol` — `executeCrossChainCall` (reverts `ExecutionNotInCurrentBlock` / `ExecutionNotFound`)
 - `src/rollupContract/Rollup.sol` — `threshold` + `checkProofSystemsAndGetVkeys` (`ThresholdNotMet(submitted,required)`, `ProofSystemNotAllowed`); threshold has NO protocol floor — may be 0
-- `src/interfaces/IEEZ.sol` + `IEEZL2.sol` — structs `CrossChainCall`, `ExecutionEntry`
+- `src/interfaces/IEEZ.sol` (L1) + `IEEZL2.sol` (L2) — each file defines its OWN `ExecutionEntry` struct with different fields (L1: IEEZ.sol:127, has `rollupUpdates`/`l2ToL1Calls`; L2: IEEZL2.sol:73, has `incomingCalls`/`expectedOutgoingCalls`) — do not treat them as one shared struct. `CrossChainCall` exists ONLY in `IEEZL2.sol`:32; the L1-side equivalent is `L2ToL1Call`, not `CrossChainCall`.
 - Builder-utility ranking: rank primitives by frequency in `script/e2e/*`, not by doc prominence
 
 ## Working rules (carried from agent-mesh field experience)
