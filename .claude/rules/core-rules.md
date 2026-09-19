@@ -6,6 +6,8 @@
 - The canonical reference for every EEZ **contract-level / technical** fact is the repo **https://github.com/eez-association/eez-core-protocol** (branch `main`) — function signatures, error names, derivation math, structs, revert behavior, thresholds, opcode behavior. Ground technical claims in the actual `.sol` source, not in the KB explainers/deep-dive/Remix PoC/`00-conventions`.
 - Those KB docs are **secondary** — conceptual framing only. **If a doc conflicts with the source, the source wins.**
 - `main` moves: `git pull` / re-clone fresh before technical work; never trust a stale copy. Key file map lives in `knowledge/sources.md`.
+- The same revert selector appears in multiple dispatch paths — never cite the first grep hit for an error name. Confirm which function encloses the line, and that the line is code, not NatSpec. (`StaticCallWithValue` fires at `EEZ.sol:1412` in `_processNStaticCalls` *and* at `EEZ.sol:1126` in `_processNCalls`.)
+- Separate **eligibility** (what the contracts actually gate — registration is sequencing-agnostic) from **integration path** (what docs describe). Where no `.sol` or repo doc grounds a claim, label it **UNVERIFIED** rather than asserting it.
 
 ## Wiki & Memory
 - Read `wiki/index.md` and the linked note before citing a prior analysis as precedent.

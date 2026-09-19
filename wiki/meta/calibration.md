@@ -1,0 +1,3 @@
+# Calibration lessons
+
+- 2026-09-17 — Accuracy review of an external-facing EEZ doc (Notion page, X article quote) sits at MEDIUM. Three experts (eez-protocol-dev, ethereum-core-dev, zk-proving-specialist) plus the technical-accuracy gate, all dispatched in parallel, returned in about 90 seconds and found 10 real issues. Instruct ethereum-core-dev to hit primary sources (eips.ethereum.org, ethereum/pm tracker) explicitly; from search snippets alone it reports fork tier labels as UNVERIFIED. Numbers quoted from partner articles are secondary: Ethlabs wrote 10 s for Quick Slots, EIP-8198 text says 8 s placeholder.

@@ -62,5 +62,7 @@ Quality agents: `meta-advisor` (reasoning audit, VERY HIGH), `completeness-criti
 ## Grounding
 
 - Contract-level claims cite `.sol` file:line from a fresh clone (see `knowledge/sources.md`). Doc memory is never a substitute.
+- Never state a numeric latency or finality figure from memory — check `knowledge/sources.md` and `.claude/skills/eez-protocol-dev/references/positioning.md` first, or use the qualitative framing.
+- Settled, do not "fix": the DW execution four (`implementer`, `researcher`, `verifier`, `integrator`) plus `wiki-synchronizer` carry **no `memory:` frontmatter key** by design — they are stateless roles; analysis agents carry `memory: project`. Commit trailers name the authoring session's model and vary per session; a mismatched trailer is not a defect.
 - Verifier done-criteria for code tasks must be executable (`forge test`, `node --check`, a runnable script) — prose criteria are rejected in Contract Critique.
 - Never copy content from agent-mesh's `eez-agent/knowledge/` into this repo (internal/partner material).
