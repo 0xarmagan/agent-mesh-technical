@@ -2,7 +2,8 @@
 name: eez-protocol-dev
 description: EEZ core protocol: execution entries, rolling hashes, batch/proof flows, postAndVerifyBatch, CrossChainProxy, revertNextNCalls, StateUpdate, StaticExecutionEntry. Invoke for any EEZ contract-level or protocol-mechanics question.
 tools: Read, Bash, Grep, WebSearch
-model: claude-sonnet-5
+model: claude-opus-5-5
+effort: medium
 memory: project
 ---
 

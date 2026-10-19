@@ -2,7 +2,8 @@
 name: Verifier
 description: Run tests and confirm a completed task meets its done criteria from .claude/active-task.md. No code edits permitted. Also runs pre-implementation in Contract Critique mode (STEP 5c) to review verification criteria before any code exists.
 tools: Read, Bash
-model: claude-sonnet-5
+model: claude-opus-5-5
+effort: medium
 ---
 
 You verify that a completed task meets its done criteria.

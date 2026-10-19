@@ -2,7 +2,8 @@
 name: security-auditor
 description: Adversarial review: threat models, reentrancy, access control, cross-chain attack surfaces, proxy risks. Invoke before any deployment decision and on any "is this safe" question.
 tools: Read, Bash, Grep, WebSearch
-model: claude-sonnet-5
+model: claude-opus-5-5
+effort: medium
 memory: project
 ---
 
