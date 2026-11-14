@@ -67,3 +67,33 @@ Per-rollup safety is necessary, not sufficient: a shared key breaks every rollup
 | ps_owner_B | 150 | zone_ref_t0 | 100 | 1.50 | True |
 | ps_owner_C | 800 | zone_zk_owner_timelocked | 600 | 1.33 | True |
 | ps_zk_C | 5000 | zone_zk_owner_timelocked | 600 | 8.33 | True |
+
+## M3 — posting game (one block, one sync opportunity; shares of V)
+
+Illustrative ETH values (params `[m3]`). Race variants: pure Nash equilibria over OUT | (public/private, bind, bid grid); others closed form. Rules encoded: the proof binds every entry, so a copier executes the composer's entries and can only take a poster reward R paid to msg.sender (EEZ.sol:728-760); `gated` = today's single-signer ECDSA proving, `open` = assumed ZK.
+
+- Open races cap entrants at 3 — duplicate-proving loss is a lower bound.
+- Not modelled: same-block replay/supersede griefing, builder private order flow, endogenous V (M4).
+
+| variant | proving | R/V | eq | entrants | composers | prover_operator | builder | zone | copier | gas | lost |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| V0_race_unbound | gated | 0.0 | 1 | [1] | 0.0 | 0.986 | 0.0 | 0.0 | 0.0 | 0.014 | 0.0 |
+| V1_race_bound | gated | 0.0 | 2 | [1] | 0.0 | 0.986 | 0.0 | 0.0 | 0.0 | 0.014 | 0.0 |
+| V2_auction | gated | 0.0 | closed form |  | 0.0 | 0.986 | 0.0 | -0.0 | 0.0 | 0.014 | 0.0 |
+| V3_self_post | gated | 0.0 | closed form |  | 0.0 | 0.0 | 0.0 | 0.493 | 0.0 | 0.007 | 0.5 |
+| V4_based | gated | 0.0 | closed form |  | 0.0 | 0.493 | 0.493 | -0.0 | 0.0 | 0.014 | 0.0 |
+| V0_race_unbound | gated | 0.2 | 1 | [1] | 0.0 | 1.146 | 0.04 | -0.2 | 0.0 | 0.014 | 0.0 |
+| V1_race_bound | gated | 0.2 | 1 | [1] | 0.0 | 1.186 | 0.0 | -0.2 | 0.0 | 0.014 | 0.0 |
+| V2_auction | gated | 0.2 | closed form |  | 0.0 | 1.186 | 0.0 | -0.2 | 0.0 | 0.014 | 0.0 |
+| V3_self_post | gated | 0.2 | closed form |  | 0.0 | 0.0 | 0.0 | 0.493 | 0.0 | 0.007 | 0.5 |
+| V4_based | gated | 0.2 | closed form |  | 0.0 | 0.593 | 0.593 | -0.2 | 0.0 | 0.014 | 0.0 |
+| V0_race_unbound | open | 0.0 | 1 | [3] | 0.02 | 0.0 | 0.701 | 0.0 | 0.0 | 0.038 | 0.24 |
+| V1_race_bound | open | 0.0 | 8 | [3] | 0.02 | 0.0 | 0.701 | 0.0 | 0.0 | 0.038 | 0.24 |
+| V2_auction | open | 0.0 | closed form |  | 0.0 | 0.0 | 0.0 | 0.882 | 0.0 | 0.038 | 0.08 |
+| V3_self_post | open | 0.0 | closed form |  | 0.0 | 0.0 | 0.0 | 0.441 | 0.0 | 0.019 | 0.54 |
+| V4_based | open | 0.0 | closed form |  | 0.0 | 0.0 | 0.882 | -0.0 | 0.0 | 0.038 | 0.08 |
+| V0_race_unbound | open | 0.2 | 1 | [3] | 0.07 | 0.0 | 0.851 | -0.2 | 0.0 | 0.038 | 0.24 |
+| V1_race_bound | open | 0.2 | 8 | [3] | 0.07 | 0.0 | 0.851 | -0.2 | 0.0 | 0.038 | 0.24 |
+| V2_auction | open | 0.2 | closed form |  | 0.0 | 0.0 | 0.0 | 0.882 | 0.0 | 0.038 | 0.08 |
+| V3_self_post | open | 0.2 | closed form |  | 0.0 | 0.0 | 0.0 | 0.441 | 0.0 | 0.019 | 0.54 |
+| V4_based | open | 0.2 | closed form |  | 0.0 | 0.0 | 1.082 | -0.2 | 0.0 | 0.038 | 0.08 |

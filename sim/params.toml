@@ -136,3 +136,27 @@ proof_systems = ["ps_ecdsa_A"]
 owner_cost = 2000
 proxy_admin_cost = 2000
 var = 200
+
+# ── M3: posting game (one L1 block, one sync opportunity) ──
+# Values in ETH, ILLUSTRATIVE (tag = assumed). Mechanics cite source @143d87e:
+#  - proof binds every entry incl. beneficiaries and currentRoot pins (EEZ.sol:728-760),
+#    so V accrues to whoever's entries execute, regardless of msg.sender
+#  - msg.sender is bound only if bindMsgSenderInPublicInput (EEZ.sol:760) → copier can only
+#    steal a poster reward R that some off-protocol design pays to msg.sender
+#  - only proof system @143d87e is single-signer ECDSA → "gated" proving
+[m3]
+tag = "assumed"
+value = 0.05                 # V: value of the sync opportunity to its composer
+poster_reward = [0.0, 0.01]  # R: off-protocol reward paid by the zone to msg.sender (0 = none)
+gas_price_gwei = 5
+rollups_in_batch = 1
+proof_systems = 1
+prove_cost = { gated = 0.0, open = 0.004 }   # per batch; ECDSA ≈ 0 off-chain, ZK assumed
+verifier = { gated = "ecdsa", open = "groth16" }
+copier_gas_multiplier = 1.0  # copier re-posts the same calldata
+public_losers_pay_gas = true
+private_channel_cost = 0.002  # paid to the builder by an included private bundle (exclusivity/trust premium) # losing public txs are included and revert; private bundles don't
+cross_rollup_share = 0.5     # V3: share of opportunities that span two rollups
+based_bargain_share = 0.5    # V4 gated: builder's share when buying the signer's signature
+bid_grid = [0.0, 0.25, 0.5, 0.75, 1.0]       # bids as fractions of the winner's max surplus
+max_composers = 3

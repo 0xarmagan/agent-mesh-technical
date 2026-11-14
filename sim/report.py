@@ -11,6 +11,7 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 import m1_cost
 import m2_security
+import m3_posting
 
 HEADER = """> **INTERNAL — model, not measurement.** Do not quote any number from this file in external
 > copy. M2 costs are illustrative units; only the binding component and ratios mean anything.
@@ -71,6 +72,22 @@ def main():
         r["margin"] = f"{r['margin']:.2f}"
         r["breaks"] = ", ".join(r["breaks"])
     md.append(table(srows, ["attack_set", "cost", "breaks", "var_sum", "margin", "safe"]))
+    md += ["", "## M3 — posting game (one block, one sync opportunity; shares of V)", "",
+           "Illustrative ETH values (params `[m3]`). Race variants: pure Nash equilibria over "
+           "OUT | (public/private, bind, bid grid); others closed form. Rules encoded: the proof binds every "
+           "entry, so a copier executes the composer's entries and can only take a poster reward R paid to "
+           "msg.sender (EEZ.sol:728-760); `gated` = today's single-signer ECDSA proving, `open` = assumed ZK.", "",
+           f"- Open races cap entrants at {p['m3']['max_composers']} — duplicate-proving loss is a lower bound.",
+           "- Not modelled: same-block replay/supersede griefing, builder private order flow, endogenous V (M4).", ""]
+    rows3 = []
+    for r in m3_posting.run(p):
+        row = {"variant": r["variant"], "proving": r["proving"], "R/V": round(r["R"] / p["m3"]["value"], 2),
+               "eq": r["equilibria"], "entrants": "" if r["entrants"] is None else r["entrants"]}
+        row.update(r["split_best"])
+        if r["split_best"] != r["split_worst"]:
+            row["variant"] += " (best eq.)"
+        rows3.append(row)
+    md.append(table(rows3, ["variant", "proving", "R/V", "eq", "entrants"] + m3_posting.PARTIES))
     out = HERE / "out" / "report.md"
     out.parent.mkdir(exist_ok=True)
     out.write_text("\n".join(md) + "\n")

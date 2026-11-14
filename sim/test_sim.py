@@ -110,5 +110,50 @@ class M2(unittest.TestCase):
         self.assertFalse(shared["psA"]["safe"])                         # 100 < 160
 
 
+import m3_posting
+
+
+class M3(unittest.TestCase):
+    def setUp(self):
+        self.s = m3_posting.setting(P, "open", 0.01)
+        self.grid = P["m3"]["bid_grid"]
+        self.rows = m3_posting.run(P)
+
+    def _row(self, variant, proving, R):
+        return next(r for r in self.rows if r["variant"] == variant and r["proving"] == proving and r["R"] == R)
+
+    def test_value_is_conserved(self):
+        for r in self.rows:
+            for k in ("split_best", "split_worst"):
+                self.assertAlmostEqual(sum(r[k].values()), 1.0, delta=0.01, msg=(r["variant"], r["proving"], r["R"]))
+
+    def test_copier_takes_only_the_poster_reward(self):
+        prof = (("public", 0, 0),)                      # public, unbound, zero bid
+        pay, split = m3_posting.race_payoffs(prof, self.s, self.grid, bind_allowed=False)
+        self.assertGreater(split["copier"], 0)
+        self.assertAlmostEqual(pay[0], self.s["V"] - self.s["prove"])  # entries still pay V to the composer
+
+    def test_bound_public_winner_is_never_copied(self):
+        _, split = m3_posting.race_payoffs((("public", 1, 0),), self.s, self.grid, bind_allowed=True)
+        self.assertEqual(split["copier"], 0)
+
+    def test_gated_proving_routes_value_to_operator(self):
+        r = self._row("V1_race_bound", "gated", 0.0)
+        self.assertEqual(r["split_best"]["composers"], 0.0)
+        self.assertGreater(r["split_best"]["prover_operator"], 0.9)
+
+    def test_binding_irrelevant_without_poster_reward(self):
+        a, b = self._row("V0_race_unbound", "open", 0.0), self._row("V1_race_bound", "open", 0.0)
+        self.assertEqual(a["split_best"], b["split_best"])
+
+    def test_binding_saves_private_premium_when_reward_exists(self):
+        a, b = self._row("V0_race_unbound", "gated", 0.01), self._row("V1_race_bound", "gated", 0.01)
+        self.assertGreater(b["split_best"]["prover_operator"], a["split_best"]["prover_operator"])
+
+    def test_self_post_loses_cross_rollup_value(self):
+        r = self._row("V3_self_post", "open", 0.0)
+        self.assertGreaterEqual(r["split_best"]["lost"], P["m3"]["cross_rollup_share"])
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
