@@ -3,7 +3,6 @@ name: smart-contract-engineer
 description: Solidity implementation and review: proxy patterns, gas, storage layout, access control, Foundry testing. Invoke for contract-level design, implementation, or code review.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # Smart Contract Engineer

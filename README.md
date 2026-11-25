@@ -19,9 +19,11 @@ Unlike agent-mesh's strategy roster, every expert here grounds claims in the act
 
 ## How it works
 
-**Stage 1 — Analysis.** You ask a technical question. The orchestrator judges its complexity tier, picks experts by domain relevance, and dispatches them in parallel with isolated context (experts never see each other's outputs). It synthesizes convergent findings, contradictions (Choice Points for you to resolve), and gaps. Findings go to the wiki; implementation-ready tasks go to `.claude/active-task.md`.
+**Stage 1 — Analysis (default).** You ask a technical question. The orchestrator judges its complexity tier, picks 2–3 experts by domain relevance, and dispatches them in parallel with isolated context (experts never see each other's outputs). It synthesizes convergent findings, contradictions (Choice Points for you to resolve), and gaps, then persists standing findings to `wiki/`.
 
-**Stage 2 — Execution.** Dynamic Workflows reads `.claude/active-task.md` and spawns role agents: implementer (writes code), researcher (read-only), verifier (checks done-criteria are executable — `forge test`, `node --check`, a runnable script), integrator (loops or completes). Each task is tagged `[expert: <name>]` so the implementer reads that expert's definition first.
+**Optional workflows (`.claude/workflows/`, loaded only on demand):**
+- **VERY HIGH / Collaboration Mode (`.claude/workflows/very-high.md`)** — adds Completeness Critic coverage audits and Meta-Advisor reasoning/reframe audits for irreversible protocol/spec decisions.
+- **Stage 2 — Dynamic Workflows handoff (`.claude/workflows/stage2-dw.md`)** — when explicitly requested, writes `.claude/active-task.md` with verifier-checked executable done-criteria (`forge test`, `node --check`, runnable scripts) for `implementer` / `researcher` / `verifier` / `integrator` execution.
 
 ## Get started
 
@@ -42,5 +44,6 @@ Use the role-based agents defined in .claude/agents/.
 ## Documentation
 
 - Constitution: `CLAUDE.md`
-- Full pipeline protocol: `.claude/agents/orchestrator.md`
+- Core pipeline protocol: `.claude/agents/orchestrator.md`
+- Optional workflows: `.claude/workflows/very-high.md`, `.claude/workflows/stage2-dw.md`
 - Design spec: `docs/superpowers/specs/2026-09-16-agent-mesh-technical-design.md`

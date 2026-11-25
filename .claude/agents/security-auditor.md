@@ -4,7 +4,6 @@ description: Adversarial review: threat models, reentrancy, access control, cros
 tools: Read, Bash, Grep, WebSearch
 model: claude-opus-5-5
 effort: medium
-memory: project
 ---
 
 # Security Auditor

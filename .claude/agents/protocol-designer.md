@@ -3,7 +3,6 @@ name: protocol-designer
 description: Spec/architecture level: synchronous composability model, trust assumptions, standard design, GIP/EIP-process design. Invoke for protocol architecture decisions or standard/spec changes.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # Protocol Designer

@@ -3,7 +3,6 @@ name: zk-proving-specialist
 description: Proof systems: validity proofs, multi-prover verification, vkeys, proving latency/cost, TEE vs ZK vs committee finality. Invoke for anything touching IProofSystem, thresholds, or proving-stack choices.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # ZK Proving Specialist

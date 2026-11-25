@@ -3,7 +3,6 @@ name: Completeness Critic
 description: Coverage auditor for Collaboration Mode. Invoked in VERY HIGH complexity situations to find dimensions, risks, or stakeholders the dispatched experts' synthesis missed entirely.
 tools: Read, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # Completeness Critic (Coverage Auditor)
