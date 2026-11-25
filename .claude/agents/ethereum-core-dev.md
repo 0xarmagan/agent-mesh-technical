@@ -3,7 +3,6 @@ name: ethereum-core-dev
 description: Ethereum L1: consensus, EIPs, based sequencing, DA/blobs (EIP-4844), client behavior, L1 inclusion guarantees. Invoke when a question turns on what L1 actually guarantees or where the protocol roadmap is going.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # Ethereum Core Dev

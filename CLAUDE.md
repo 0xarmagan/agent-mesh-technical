@@ -1,37 +1,21 @@
 # agent-mesh-technical
 
-Multi-expert orchestrator for EEZ technical work. Routes protocol, contract, and Ethereum-core questions to specialized technical agents with isolated context, synthesizes their outputs, writes findings to a persistent wiki, and hands implementation-ready tasks to Dynamic Workflows.
+Multi-expert orchestrator and source-grounded wiki for EEZ technical work.
 
 @.claude/rules/core-rules.md
 
-## How this repo operates
+## Routing
 
-- **LOW-complexity questions** (single-domain, clear, reversible): answer directly. No expert dispatch, no writeback.
-- **MEDIUM+ analysis** (multi-domain, ambiguous, high-stakes, or long-horizon): Read `.claude/agents/orchestrator.md` FIRST and follow its pipeline — tier assignment, expert routing, synthesis, and writeback are defined there and only there.
-- Expert roster lives in `.claude/agents/`, one per row:
+- **LOW** (single-domain, clear, reversible): answer directly (2–3 findings + next steps). No dispatch, no writeback.
+- **MEDIUM / HIGH** (multi-domain, ambiguous, or high-stakes): read `.claude/agents/orchestrator.md` first and follow its pipeline.
+- **Expert roster:** `.claude/agents/` (select by frontmatter `description`; prefer 2–3 focused experts).
+- **Isolated context** is mandatory for parallel expert dispatch: experts never see each other's outputs.
+- **External-facing artifacts** require human review and must pass `.claude/skills/technical-accuracy/SKILL.md` (paired with source checks for protocol mechanics).
 
-| Agent | Domain |
-|---|---|
-| eez-protocol-dev | Execution entries, rolling hashes, batch/proof flows, EEZ core code |
-| smart-contract-engineer | Solidity, proxy patterns, gas, contract-level design/review |
-| protocol-designer | Composability model, trust assumptions, standard & GIP design |
-| ethereum-core-dev | L1 consensus, EIPs, based sequencing, DA/blobs, clients |
-| zk-proving-specialist | Proof systems, multi-prover verification, validity proofs |
-| security-auditor | Threat models, reentrancy, cross-chain attack surfaces |
-| mev-sequencing-economist | Composer fee market, based-sequencing incentives, MEV |
-| rollup-integration-engineer | How an L2 joins EEZ: node changes, sequencer, deposits |
+## Optional workflows (read only when triggered)
 
-- Isolated context is mandatory for parallel expert dispatch: experts never see each other's outputs.
-- Every external-facing artifact requires human review before sending — and must pass the technical-accuracy gate first (`.claude/skills/technical-accuracy/SKILL.md`).
-
-## Tier output contracts
-
-| Tier | Output |
-|---|---|
-| LOW | Lite: 2–3 findings + next steps. No dispatch, no writeback. |
-| MEDIUM | Standard: Core Claim + Evidence + Key Assumption. Dispatch + wiki writeback + Active Task Context (when execution intent exists — see orchestrator STEP 5b). |
-| HIGH | Deep: adds per-expert scenario analysis. |
-| VERY HIGH | Collaboration: convergent findings + Choice Points + robust move; coherence check; Meta-Advisor audit. |
+- **VERY HIGH / Collaboration Mode & reframe audits:** read `.claude/workflows/very-high.md` only for irreversible protocol/spec/deployment decisions or when explicitly requested.
+- **Stage 2 Dynamic Workflows handoff (`.claude/active-task.md`):** read `.claude/workflows/stage2-dw.md` only when explicitly asked to prepare a DW/ultracode task handoff.
 
 ## Wiki (persistent memory)
 
@@ -42,27 +26,12 @@ wiki/
 ├── notes/  entities/  concepts/  sources/  meta/
 ```
 
-- `entities/` and `meta/` are created on first real need — absence means "nothing learned yet," not an error.
-- `wiki/meta/` holds learned routing and framing lessons as prose (calibration.md, persona-fit.md, framing-patterns.md, user-prefs.md).
-- Writeback after every MEDIUM+ response is non-negotiable.
-
-## Dynamic Workflows handoff
-
-MEDIUM+ analysis ends with an `## Active Task Context` block written to `.claude/active-task.md` (format defined in orchestrator.md). Review it, resolve any Open Choice Points, then trigger:
-
-```
-Execute the Active Task Context in .claude/active-task.md using ultracode.
-Read .claude/active-task.md first — the task list, constraints, and verification criteria are there.
-Use the role-based agents defined in .claude/agents/.
-```
-
-DW execution layer: `implementer` · `researcher` · `verifier` · `integrator` (definitions in `.claude/agents/`). Each task carries an `[expert: <name>]` tag — the implementer reads that expert's definition before implementing, so analysis-phase frameworks carry into execution.
-Quality agents: `meta-advisor` (reasoning audit, VERY HIGH), `completeness-critic` (coverage audit, VERY HIGH), `wiki-synchronizer` (wiki/memory/primer drift audit) — definitions in `.claude/agents/`.
+- `wiki/meta/` holds learned lessons (`calibration.md`, `user-prefs.md`, etc.); created on first need.
+- Writeback after every MEDIUM+ response is mandatory (speculative/hypothetical questions need only a `wiki/log.md` entry).
+- Periodic drift check: `wiki-synchronizer` (`.claude/agents/wiki-synchronizer.md`) + `python3 scripts/check_wiki_drift.py`.
 
 ## Grounding
 
-- Contract-level claims cite `.sol` file:line from a fresh clone (see `knowledge/sources.md`). Doc memory is never a substitute.
-- Never state a numeric latency or finality figure from memory — check `knowledge/sources.md` and `.claude/skills/eez-protocol-dev/references/positioning.md` first, or use the qualitative framing.
-- Settled, do not "fix": the DW execution four (`implementer`, `researcher`, `verifier`, `integrator`) plus `wiki-synchronizer` carry **no `memory:` frontmatter key** by design — they are stateless roles; analysis agents carry `memory: project`. Commit trailers name the authoring session's model and vary per session; a mismatched trailer is not a defect.
-- Verifier done-criteria for code tasks must be executable (`forge test`, `node --check`, a runnable script) — prose criteria are rejected in Contract Critique.
+- Contract-level claims cite `.sol` file:line from a fresh clone (`knowledge/sources.md`). Doc memory never substitutes for source.
+- Never state a numeric latency or finality figure from memory — verify against `knowledge/sources.md` and `.claude/skills/eez-protocol-dev/references/positioning.md`, or use qualitative framing.
 - Never copy content from agent-mesh's `eez-agent/knowledge/` into this repo (internal/partner material).

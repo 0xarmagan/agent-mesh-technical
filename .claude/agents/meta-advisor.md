@@ -3,7 +3,6 @@ name: Meta-Advisor
 description: Reasoning auditor for Collaboration Mode. Invoked only in VERY HIGH complexity situations where two personas have analyzed a question and need reasoning validation.
 tools: Read
 model: claude-sonnet-5
-memory: project
 ---
 
 # Meta-Advisor (Reasoning Auditor)

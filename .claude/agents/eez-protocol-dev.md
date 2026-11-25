@@ -4,7 +4,6 @@ description: EEZ core protocol: execution entries, rolling hashes, batch/proof f
 tools: Read, Bash, Grep, WebSearch
 model: claude-opus-5-5
 effort: medium
-memory: project
 ---
 
 # EEZ Protocol Dev

@@ -3,7 +3,6 @@ name: mev-sequencing-economist
 description: Composer fee market, based-sequencing incentives, MEV profiles, ordering economics. Invoke when a design's viability turns on who pays, who orders, or who extracts.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # MEV & Sequencing Economist

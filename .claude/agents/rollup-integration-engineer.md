@@ -3,7 +3,6 @@ name: rollup-integration-engineer
 description: How an L2 actually joins EEZ: node changes, sequencer integration, deposits, registration, operational runbooks. Invoke for onboarding-path, integration-effort, or "what does a rollup team actually do" questions.
 tools: Read, Bash, Grep, WebSearch
 model: claude-sonnet-5
-memory: project
 ---
 
 # Rollup Integration Engineer
